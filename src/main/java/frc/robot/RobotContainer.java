@@ -75,6 +75,8 @@ public class RobotContainer {
         joystick.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
+
+        joystick.leftBumper().whileTrue(drivetrain.applyRequest)
     }
 
     public Command getAutonomousCommand() {
@@ -94,5 +96,7 @@ public class RobotContainer {
             // Finally idle for the rest of auton
             drivetrain.applyRequest(() -> idle)
         );
+
+
     }
 }
