@@ -15,9 +15,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Intake.IntakeStates;
+import frc.robot.subsystems.Outtake.OuttakeStates;
 
 public class RobotContainer {
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -32,8 +35,8 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController joystick = new CommandXboxController(0);
-
+    private final CommandXboxController joystick = new CommandXboxController(Constants.Controllers.DRIVER_PORT);
+    private final CommandXboxController operator = new CommandXboxController(Constants.Controllers.OPERATOR_PORT);
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
     public RobotContainer() {
@@ -73,10 +76,20 @@ public class RobotContainer {
 
         // Reset the field-centric heading on left bumper press.
         joystick.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        joystick.leftBumper().whileTrue(drivetrain.applyRequest)
+        // Operator controls
+        operator.rightBumper().onTrue(
+            new InstantCommand(() -> Robot.getOuttake().setOuttake(OuttakeStates.OUT), Robot.getOuttake())
+        ).onFalse(
+            new InstantCommand(() -> Robot.getOuttake().setOuttake(OuttakeStates.OFF), Robot.getOuttake())
+        );
+
+        operator.leftBumper().onTrue(
+            new InstantCommand(() -> Robot.getIntake().setIntake(IntakeStates.IN), Robot.getIntake())
+        ).onFalse(
+            new InstantCommand(() -> Robot.getIntake().setIntake(IntakeStates.OFF), Robot.getIntake())
+        );
     }
 
     public Command getAutonomousCommand() {

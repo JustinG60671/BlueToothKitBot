@@ -7,11 +7,12 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.generated.TunerConstants;
 
 
 public class Intake extends SubsystemBase{
-    private TalonFX intakeMotor;
-    private final CANBus canbus = new CANBus(Constants.Intake.CANBUS);
+    private final TalonFX intakeMotor;
+    private final CANBus canbus = TunerConstants.kCANBus;
     public Intake() {
         //create config object 
         TalonFXConfiguration intakeConfig = new TalonFXConfiguration();

@@ -92,13 +92,13 @@ public class Robot extends TimedRobot {
     if (outtake == null) {
       outtake = new Outtake();
     }
-    return outtake;
-  }
+        return outtake;
+    }
 
   public static Intake getIntake() {
     if (intake == null) {
       intake = new Intake();
     }
-    return intake;
-  }
+        return intake;
+    }
 }
