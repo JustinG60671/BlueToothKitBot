@@ -19,7 +19,7 @@ public class Constants {
     }
 
     public interface Intake {
-        static final int INTAKE_MOTOR_ID = 5;
+        static final int INTAKE_MOTOR_ID = 5; //change as needed
         //static final String CANBUS = "rio"; --chanegd to TunerConstants.kCANBus
         public static final int INTAKE_MOTOR_CURRENT_LIMIT = 40;
 
@@ -28,7 +28,7 @@ public class Constants {
     }
 
     public interface Outtake {
-        static final int OUTTAKE_MOTOR_ID = 6;
+        static final int OUTTAKE_MOTOR_ID = 6; //change as needed
         //static final String CANBUS = "rio"; --changed to TunerConstants.kCANBus
         public static final int OUTTAKE_MOTOR_CURRENT_LIMIT = 40;
     }

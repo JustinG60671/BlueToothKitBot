@@ -12,6 +12,7 @@ import frc.robot.generated.TunerConstants;
 
 public class Intake extends SubsystemBase{
     private final TalonFX intakeMotor;
+    //private final TalonFX altIntakeMotor;
     private final CANBus canbus = TunerConstants.kCANBus;
     public Intake() {
         //create config object 
